@@ -1,0 +1,167 @@
+/* Css File */
+*{
+	margin:0;
+	padding:0;
+}
+
+body{
+	font-family: "Helvetica Neue",Arial,Helvetica,sans-serif;
+}
+
+#wrap{
+	width:900px;
+	margin:10px auto;
+}
+
+#block1{
+	background:#fff;
+	min-height:400px;
+	top:10%;
+	width:100%;
+}
+
+#blocks{
+	display:block;
+	height:400px;
+	overflow: hidden;
+}
+
+#blocks li{
+	list-style-type: none;
+}
+
+.text-title{
+	font-size:32px;
+	font-weight:600;
+}
+
+.steps{
+	font-size:24px;
+	color:#DFDFDF;
+	padding-left:10px;
+}
+
+.cycle{
+	background:url("../images/cycle.jpg") no-repeat;
+	
+}
+
+.hideit{
+	/*display: none;*/
+}
+
+.cycle:hover{
+	background:url("../images/cycle_hover.jpg") no-repeat;
+}
+
+.bike{
+	background:url("../images/bike.jpg") no-repeat;
+	
+}
+
+.bike:hover{
+	background:url("../images/bike_hover.jpg") no-repeat;
+}
+
+.car{
+	background:url("../images/car.jpg") no-repeat;
+	
+}
+
+.car:hover{
+	background:url("../images/car_hover.jpg") no-repeat;
+}
+
+#typeselection{
+	margin-top:20px;
+	margin-left: 13%;
+	display:block;
+}
+
+#typeselection li{
+	cursor: pointer;
+	float:left;
+	margin-right:20px;
+	list-style-type: none;
+	width:200px;
+	height:200px;
+}
+
+#typeselection li:last{
+	margin-right:0px;
+}
+
+.slideblock{
+	margin:40px 0px 40px 0px;
+	float:left;
+}
+
+.slidevalue{
+	font-size: 22px;
+	font-weight: 600;
+	float: left;
+	margin-left: 20px;
+	margin-top: 27px;
+}
+
+#submitdata{
+	background:url(../images/submit.png) no-repeat;
+	width:147px;
+	height:44px;
+	font-size: 28px;
+	color: white;
+	padding-top: 8px;
+	padding-left: 26px;
+	float:right;
+	cursor: pointer;
+}
+
+.col{
+	text-align:center;
+	border:2px solid #000;
+	min-height:300px;
+	width: 32%;
+	-webkit-border-radius: 4px;
+	moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.col label{
+	width: 100%;
+	display: block;
+	color: white;
+	background: black;
+	padding-top: 5px;
+}
+
+.green{
+	color:#64b50c;
+}
+
+.red{
+	color:#e70d0d;
+}
+
+.orange{
+	color:#e36206;
+}
+
+.datablock{
+	margin-top: 10px;
+padding: 9px;
+width: 94%;
+}
+
+.datablock h1{
+	font-size:20px;
+	text-transform:uppercase;
+	border-bottom: 1px solid black;
+}
+
+.datablock .datavalue{
+	font-size:60px;
+}
+
+.datablock p{
+	font-size:20px;
+}
