@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -106,7 +107,7 @@
 				<li id="block2" class="blk">
 					<!-- Distance, Fuel and other stuff -->
 					<div style="border-top:1px solid #DFDFDF;">
-						<div style="margin-top: 20px;"><span class="text-title">Slide approximate distance you travel everyday.</span><span class="steps">Step 2 of 2</span></div>
+						<div style="margin-top: 20px;"><span class="text-title" style="font-size:26px;">What is the approximate distance you travel everyday ?</span><span class="steps">Step 2 of 2</span></div>
 						<div class="slideblock">
 							<div id="slider-bg" class="slider" tabindex="-1" title="Slide your distance">
 			  					<div id="slider-thumb" class="slider-handle"></div>
@@ -122,7 +123,7 @@
 							</p>
 						</div>
 						<div id="bike-car" style="display:none;">
-							<div style="margin-top: 20px;"><span class="text-title" style="font-size:24px;">Also your average fuel usage</span></div>
+							<div style="margin-top: 20px;"><span class="text-title" style="font-size:26px;">What's your mileage ?</span></div>
 							<div class="slideblock">
 								<div id="slider-bg2" class="slider" tabindex="-1" title="Slider">
 				  					<div id="slider-thumb2" class="slider-handle"></div>
@@ -139,7 +140,7 @@
 							</div>
 						</div>
 						<div>
-							<div style="margin-top: 20px;"><span class="text-title" style="font-size:24px;">Also your average fuel usage</span></div>
+							<div style="margin-top: 20px;"><span class="text-title" style="font-size:26px;">What's the average time taken to travel ?</span></div>
 							<div class="slideblock">
 								<div id="slider-bg3" class="slider" tabindex="-1" title="Slider">
 	  								<div id="slider-thumb3" class="slider-handle"></div>
@@ -166,7 +167,7 @@
 					<!-- Report -->
 					<div style="border-top:1px solid #DFDFDF;">
 						<div style="margin-top: 20px;"><span class="text-title">Report.</span><span class="steps">Final</span></div>
-						<div id="compare-container">
+						<div id="compare-container" style="min-height:700px;">
 							<div id="first-div" class="col">
 								<label><img src="images/cycle_report.jpg" width="60%"/></label>	
 								<div class="datablock" id="cycle_money">
@@ -179,10 +180,21 @@
 									<p><span id="cycle_speed" class="datavalue ">0</span> Km/hr</p>
 								</div>	
 
+								<div class="datablock" id="cy_time">
+									<h1>Time Taken</h1>
+									<p><span id="cycle_time_taken" class="datavalue ">0</span> HH::MM:SS</p>
+								</div>	
+
 								<div class="datablock" id="cy_calorie">
 									<h1>Calorie</h1>
 									<p><span id="cycle_calorie" class="datavalue green">0</span> Calories/day</p>
-								</div>	
+								</div>
+
+								<div class="datablock" id="cy_carbon">
+									<h1>CO2 Emission</h1>
+									<p><span id="cycle_carbon" class="datavalue">0</span> kg</p>
+								</div>		
+
 							</div>
 							<div id="second-div" class="col">
 								<label><img src="images/bike_report.jpg" width="60%"/></label>	
@@ -194,26 +206,47 @@
 									<h1>Speed</h1>
 									<p><span id="bike_speed" class="datavalue ">0</span> Km/hr</p>
 								</div>
+
+
+								<div class="datablock" id="bk_time">
+									<h1>Time Taken</h1>
+									<p><span id="bike_time_taken" class="datavalue ">0</span> HH::MM:SS</p>
+								</div>	
+
 								<div class="datablock" id="bk_calorie">
 									<h1>Calorie</h1>
 									<p><span id="bike_calorie" class="datavalue red">0</span> Calories/day</p>
 								</div>	
+								<div class="datablock" id="bk_carbon">
+									<h1>CO2 Emission</h1>
+									<p><span id="bike_carbon" class="datavalue">0</span> kg</p>
+								</div>
 
 							</div>
 							<div id="third-div" class="col">
 								<label><img src="images/car_report.jpg" width="60%"/></label>	
 								<div class="datablock" id="cycle_money">
 									<h1>Money Spent</h1>
-									<p><span id="car_cost" class="datavalue ">0</span> Km/hr</p>
+									<p><span id="car_cost" class="datavalue ">0</span> Rs.</p>
 								</div>
 								<div class="datablock" id="cr_speed">
 									<h1>Speed</h1>
 									<p><span id="car_speed" class="datavalue ">0</span> Km/hr</p>
 								</div>	
+
+								<div class="datablock" id="cr_time">
+									<h1>Time Taken</h1>
+									<p><span id="car_time_taken" class="datavalue ">0</span> HH::MM:SS</p>
+								</div>	
+
 								<div class="datablock" id="cr_calorie">
 									<h1>Calorie</h1>
 									<p><span id="car_calorie" class="datavalue red">0</span> Calories/day</p>
 								</div>	
+								<div class="datablock" id="cr_carbon">
+									<h1>CO2 Emission</h1>
+									<p><span id="car_carbon" class="datavalue">0</span> kg</p>
+								</div>
 							</div>
 							<!--<table  id="compare-container" >
 								<tr>

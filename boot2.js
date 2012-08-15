@@ -1,3 +1,4 @@
+
 (function() {
     var Event = YAHOO.util.Event,
         Dom   = YAHOO.util.Dom,
@@ -109,7 +110,7 @@
         var typeclick = function (event, matchedEl, container) {
             typename = Dom.getAttribute(this,"data-value");
             if((typename === '2')||(typename === '3')){
-                alert("Open Car / Bike");
+                //alert("Open Car / Bike");
                 //Show the fuel slider with animation
                 //YAHOO.util.Dom.setStyle(document.body, 'opacity', '0');
                 /*var ani = new YAHOO.util.Anim('bike-car' , {
@@ -170,42 +171,44 @@ var submitclick = function (event, matchedEl, container) {
         function rundata(){
             distance = Dom.get("slider-converted-value").value;
 
-            //cost module
-            bike_fuel_cost = fuelcost(distance,bike_efficiency,petrol);
-            car_fuel_cost = fuelcost(distance,car_efficiency,petrol);
-            cycle_fuel_cost = 0;
-            //set colors
-            Dom.addClass('cycle_cost', 'green'); 
-            if(bike_fuel_cost>car_fuel_cost){
-                Dom.addClass('bike_cost', 'red'); 
-                Dom.addClass('car_cost', 'orange'); 
-            }
-            else{
-                Dom.addClass('bike_cost', 'orange'); 
-                Dom.addClass('car_cost', 'red'); 
-            }
-            //set colors
-            //cost module
-
-            //speed module
+             //speed module
              var vh_time_hr = Dom.get("slider-converted-value4").value;           
              var vh_time_min =  Dom.get("slider-converted-value5").value;                        
              var vh_time_seconds = parseInt(getSeconds(vh_time_hr,'hours'))+parseInt(getSeconds(vh_time_min,'minutes'));
 
              var vh_speed = Math.round(parseFloat(get_speed(distance,vh_time_seconds,'hours'))); 
-            /*console.log('cy_time_seconds: '+getSeconds(cy_time_hr,'hours'));
-            console.log('cy_time_seconds: '+getSeconds(cy_time_min,'minutes'));
-            console.log('cy_time_seconds: '+cy_time_seconds);*/
+
+              var cycle_time_taken_set = '00:00',bike_time_taken_set = '00:00',car_time_taken_set = '00:00';
+
+            
             switch(parseInt(typename))
             {
                 case 1:              
-                        cycle_speed = vh_speed;                       
+                        cycle_speed = vh_speed;     
+                        
+                        //set time in seconds.                        
+                        cycle_time_taken_set = vh_time_seconds;
+                        bike_time_taken_set = parseInt((distance/bike_speed)*3600);
+                        car_time_taken_set = parseInt((distance/car_speed)*3600);
                         break;
                 case 2: 
-                        bike_speed = vh_speed;
+                        bike_speed = vh_speed;  //console.log(Dom.get("slider-converted-value2").value);
+                        bike_efficiency = Dom.get("slider-converted-value2").value; //console.log(bike_efficiency);                
+                        
+
+                        //set time in seconds.                        
+                        cycle_time_taken_set = parseInt((distance/cycle_speed)*3600);                                
+                        bike_time_taken_set = vh_time_seconds;
+                        car_time_taken_set = parseInt((distance/car_speed)*3600);
                         break;
                 case 3: 
-                        car_speed = vh_speed;
+                        car_speed = vh_speed;   //console.log(Dom.get("slider-converted-value2").value);
+                        car_efficiency = Dom.get("slider-converted-value2").value;   
+                        
+                        //set time in seconds
+                        cycle_time_taken_set = parseInt((distance/cycle_speed)*3600);
+                        bike_time_taken_set = parseInt((distance/bike_speed)*3600);                        
+                        car_time_taken_set = vh_time_seconds;
                         break;
             }
             
@@ -236,16 +239,63 @@ var submitclick = function (event, matchedEl, container) {
                 Dom.addClass('bike_speed', 'green'); 
                 Dom.addClass('car_speed', 'orange'); 
 
-            }    
+            }  
+            //speed module    
 
-            //speed module
+            //time module
+
+            console.log('cy: '+cycle_time_taken_set+'bi: '+bike_time_taken_set+' cr:'+car_time_taken_set);    
+            Dom.get("cycle_time_taken").innerHTML = format_time(cycle_time_taken_set);
+            Dom.get("bike_time_taken").innerHTML = format_time(bike_time_taken_set);
+            Dom.get("car_time_taken").innerHTML = format_time(car_time_taken_set);                   
+            //time module
+
+
+            //cost module
+            bike_fuel_cost = fuelcost(distance,bike_efficiency,petrol);
+            car_fuel_cost = fuelcost(distance,car_efficiency,petrol);
+            cycle_fuel_cost = 0;
+            //set colors
+            Dom.addClass('cycle_cost', 'green'); 
+            if(bike_fuel_cost>car_fuel_cost){
+                Dom.addClass('bike_cost', 'red'); 
+                Dom.addClass('car_cost', 'orange'); 
+            }
+            else{
+                Dom.addClass('bike_cost', 'orange'); 
+                Dom.addClass('car_cost', 'red'); 
+            }
+            //set colors
+            //cost module
+
+            
 
             //calorie module starts
-            var calorie_burned = calorieburner(50,vh_time_seconds,'seconds');
-            //console.log(calorie_burned);
+            var calorie_burned = calorieburner(distance);//calorieburner(50,vh_time_seconds,'seconds'); //console.log(calorie_burned);
             Dom.get("cycle_calorie").innerHTML = calorie_burned;
             //calorie module ends
 
+            //carbon footprint    
+            var bike_carbon = parseFloat(carbonemission(distance,bike_efficiency,'petrol'));
+            bike_carbon = formatDecimal(bike_carbon, 2);
+            
+            var car_carbon = parseFloat(carbonemission(distance,car_efficiency,'diesel'));
+            car_carbon = formatDecimal(car_carbon, 2);
+            
+            if(bike_carbon>car_carbon){
+                Dom.addClass('bike_carbon', 'red'); 
+                Dom.addClass('car_carbon', 'orange');    
+            }else{
+                Dom.addClass('bike_carbon', 'orange'); 
+                Dom.addClass('car_carbon', 'red');
+            }
+
+            Dom.get("cycle_carbon").innerHTML = 0;
+            Dom.get("bike_carbon").innerHTML = bike_carbon;
+            Dom.get("car_carbon").innerHTML = car_carbon;
+
+            //console.log('bike carbon: '+petrol_carbon+' kg');// console.log('car carbon: '+car_carbon+' kg');   
+            //carbon footprint
 
             //console.log(bike_fuel_cost);
             //Set Fuel Data
@@ -283,8 +333,25 @@ var submitclick = function (event, matchedEl, container) {
                 return  Math.round((totaldistance / efficiency) * cost );
             }
 
+        //carbon emitted by type of fuel
+        function carbonemission(totaldistance,efficiency,type)
+        {
+            var petrol_fuel_emission = 2.4; //2.4 kg of carbon emitted.
+            var diesel_fuel_emission = 2.7; //2.7 kg of carbon emitted. 
+            var fuel_quantity = (totaldistance / efficiency);
+            console.log(fuel_quantity);
+            switch(type)
+            {
+                case 'petrol': return ( fuel_quantity * petrol_fuel_emission );
+                                break;
+                case 'diesel': return ( fuel_quantity * diesel_fuel_emission );
+                                break;
+            }
+        }
+
+
         //calculate calorie
-        function calorieburner(kg,time_data,type)
+        function calorieburner1(kg,time_data,type)
         {
             var hr = time_data;     
             switch(type)
@@ -297,7 +364,13 @@ var submitclick = function (event, matchedEl, container) {
                                break;               
             }
             return Math.round((kg*10)*hr);
-        }    
+        }  
+
+        //calculate calorie
+        function calorieburner(distance)
+        {
+            return Math.round(100*parseInt(distance));
+        }  
 
         function get_speed(metres,seconds,type)
         {
@@ -368,8 +441,33 @@ var submitclick = function (event, matchedEl, container) {
         }
 
         //
+        function fixnan(i)
+        {
+            if(isNaN(i)){
+                    return 0
+            }else{
+                    return i
+            }
+        }
 
+        function format_time(SecondsRequired)
+        {
+                var hours, minutes , secs
+                var remainder;
+                hours = fixnan(parseInt(SecondsRequired / 3600)) ;// ''and chuck ayay remainder
+                remainder = fixnan(parseFloat(formatDecimal(SecondsRequired - (hours * 3600.0),4)));
+                minutes = fixnan(parseInt(remainder / 60.0));
+                secs = remainder - (minutes * 60.0);
+                if( secs<= 0.0001 )secs=0;
+                
+                hours=fixnan(hours);
+                minutes=fixnan(minutes);
+                secs=fixnan(parseFloat(secs));
+                sout = parseInt(hours) + " : " + parseInt(minutes) + " : " + parseInt(secs);
+                
+                return sout;
+        
+        }    
 
     });
 })();
-
